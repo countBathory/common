@@ -1,0 +1,33 @@
+echo "Enter ur expr or"
+echo "enter x to exit"
+regex='^-?[0-9]+$'
+read a R b
+while [[ $a != "x" ]]
+do
+	if [[ $a =~ $regex && $b =~ $regex ]];then
+		case "$R" in
+			"+"	) echo "$a + $b" |bc;;
+			"-"	) echo "$a - $b" |bc;;
+			"/"	) if [[ $b != "0" ]];then
+					echo "scale=2;$a / $b" |bc
+				else 
+					echo "Error"
+				fi;;
+			"^"	) echo "$a ^ $b" |bc;;
+			"*"	) echo "$a * $b" |bc;;
+#			"sqrt"	) echo "scale=2;sqrt($a)"|bc;;
+			*	) echo "Error" ;;
+		esac
+	elif [[ $a =~ $regex ]];then
+		if [[ "$R" == "sqrt" ]];then
+			echo "scale=2;sqrt($a)"|bc
+		else
+			echo "Error"
+		fi
+	else
+		echo "Error"	
+	fi
+	echo "Enter ur expr or"
+	echo "enter x to exit"
+	read a R b
+done
